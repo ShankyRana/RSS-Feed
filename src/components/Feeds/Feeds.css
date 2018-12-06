@@ -1,0 +1,19 @@
+.card-container {
+  width: 33%;
+  float: left;
+  padding: 4% 2%;
+}
+.card {
+  height: 330px;
+  width: 35rem !important;
+  border-radius: 6px;
+  padding: 12%;
+}
+.card-title {
+  height: 50px;
+  overflow: auto -webkit-paged-x;
+}
+.card-text {
+  height: 130px;
+  overflow: scroll;
+}

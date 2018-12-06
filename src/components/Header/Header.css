@@ -1,0 +1,18 @@
+.navbar-header {
+  width: 60% !important;
+}
+.navbar-form {
+  padding: 1%;
+}
+.navbar-form .form-group {
+  width: 85%;
+}
+.navbar-form .input-group {
+  width: 100% !important;
+}
+.navbar-form .input-group-addon {
+  cursor: pointer;
+}
+.navbar-form input {
+  width: 100% !important;
+}
