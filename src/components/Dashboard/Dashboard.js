@@ -42,7 +42,7 @@ class Dashboard extends Component {
 
       //get logged in users info
       axios.defaults.headers.common['Authorization'] = 'bearer '+ token;
-      axios.get('http://localhost:8000/api/ping' )
+      axios.get('https://rss-feed-backend.herokuapp.com/api/ping' )
       .then(response => {
 
         const user = response.data.data.user;
@@ -90,8 +90,8 @@ class Dashboard extends Component {
     const data= {
       link: link && typeof link === 'string'?link:this.state.link
     };
-    
-    axios.post('http://localhost:8000/api/feeds', data)
+
+    axios.post('https://rss-feed-backend.herokuapp.com/api/feeds', data)
     .then(response => {
       this.setState({feeds: JSON.parse(response.data.data)});
     })
@@ -143,7 +143,7 @@ class Dashboard extends Component {
     };
 
     //Put request to save user's details
-    axios.put('http://localhost:8000/api/user', data)
+    axios.put('https://rss-feed-backend.herokuapp.com/api/user', data)
     .then(response => {
       this.setState({feeds: JSON.parse(response.data.data)});
     })

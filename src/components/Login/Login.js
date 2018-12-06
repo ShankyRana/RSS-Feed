@@ -55,7 +55,7 @@ class Login extends Component {
       return this.setState({passwordError: 'Password Required'});
 
     //Rest login request
-    axios.post('http://localhost:8000/api/user/session', { email, password })
+    axios.post('https://rss-feed-backend.herokuapp.com/api/user/session', { email, password })
     .then(response => {
 
       const token = response.data.data.token;
