@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { browserHistory } from 'react-router';
 import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { Header, Sidebar, Feeds } from 'components';
 import { checkLogin, logout } from 'services/common';
@@ -26,11 +27,15 @@ class Dashboard extends Component {
       user: '',
       isVisible: false,
       link: '',
+      loading: true,
       feeds: '',
       fontSize: 14,
       fontColor: 'lightgray',
       headlineColor: 'black',
-      backgroundColor: 'white'
+      backgroundColor: 'white',
+      feedCount: 0,
+      successMessage: '',
+      errorMessage: ''
     }
   }
 
@@ -42,7 +47,7 @@ class Dashboard extends Component {
 
       //get logged in users info
       axios.defaults.headers.common['Authorization'] = 'bearer '+ token;
-      axios.get('https://rss-feed-backend.herokuapp.com/api/ping' )
+      axios.get('http://localhost:8000/api/ping' )
       .then(response => {
 
         const user = response.data.data.user;
@@ -87,17 +92,20 @@ class Dashboard extends Component {
    **Gets RSS feed
    ***/
   fetchFeeds = (link) => {
+    this.setState({loading: true, feedCount: 0, successMessage: '', errorMessage: ''});
     const data= {
       link: link && typeof link === 'string'?link:this.state.link
     };
 
-    axios.post('https://rss-feed-backend.herokuapp.com/api/feeds', data)
+    axios.post('http://localhost:8000/api/feeds', data)
     .then(response => {
-      this.setState({feeds: JSON.parse(response.data.data)});
+      const feeds = JSON.parse(response.data.data);
+      const feedCount = feeds.items.length;
+      this.setState({loading: false, feeds: feeds, feedCount: feedCount, successMessage: "Fetched Successfully"});
     })
-    .catch(function (error) {
-      toast('Payout Successful', toastConfig)
-      console.log(error.response);
+    .catch(error => {
+      toast('Fetch failed', toastConfig);
+      this.setState({loading: false, errorMessage: "Fetch failed"});
     });
   }
 
@@ -143,22 +151,30 @@ class Dashboard extends Component {
     };
 
     //Put request to save user's details
-    axios.put('https://rss-feed-backend.herokuapp.com/api/user', data)
+    axios.put('http://localhost:8000/api/user', data)
     .then(response => {
       this.setState({feeds: JSON.parse(response.data.data)});
+      toast('Configuration Saved', toastConfig);
     })
-    .catch(function (error) {
-      console.log(error);
+    .catch(error => {
+      if(error.response)
+        toast('Error Saving Configuration', toastConfig);
+      else
+        toast('Configuration Saved', toastConfig);
     });
   }
 
   render() {
-    const { link } = this.state;
+    const { link, loading, feedCount, successMessage, errorMessage } = this.state;
 
     return (
       <div className="Dashboard">
         <Header
           link={link}
+          loading={loading}
+          feedCount={feedCount}
+          successMessage={successMessage}
+          errorMessage={errorMessage}
           handleChange={this.handleChange}
           fetchFeeds={this.fetchFeeds}
         />

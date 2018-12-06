@@ -1,5 +1,5 @@
 .navbar-header {
-  width: 60% !important;
+  width: 85% !important;
 }
 .navbar-form {
   padding: 1%;
@@ -8,7 +8,12 @@
   width: 85%;
 }
 .navbar-form .input-group {
-  width: 100% !important;
+  width: 70% !important;
+}
+
+.navbar-form .form-group .navbar-text{
+  float: right;
+  margin: 1%;
 }
 .navbar-form .input-group-addon {
   cursor: pointer;

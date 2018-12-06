@@ -53,7 +53,7 @@ class Signup extends Component {
       return this.setState({passwordError: 'Password Required'});
 
     //Rest signup request
-    axios.post('https://rss-feed-backend.herokuapp.com/api/user', { email, password })
+    axios.post('http://localhost:8000/api/user', { email, password })
     .then(response => {
       if(!response.data.success)
         return this.setState({passwordError: response.data.userMessage});

@@ -296,15 +296,15 @@ methods.userlogout = function(req, res) {
 methods.getFeeds = async function(req, res) {
 	let response = {};
 	req.checkBody('link', 'link is required.').notEmpty();
-	let feed = await parser.parseURL(req.body.link);
-	if(feed) {
+	try {
+		let feed = await parser.parseURL(req.body.link);
 		response.data = JSON.stringify(feed);
 		response.error = false;
 		response.userMessage = "feed";
 		response.code = 200;
 		response.errors = null;
 		return SendResponse(res, response, 200);
-	} else {
+	} catch(error) {
 		response.error = true;
 		response.code = 10901;
 		response.userMessage = 'There was a problem with the request, please try again.'
