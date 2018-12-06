@@ -1,11 +1,13 @@
 ## Node version: 10.8.0
 ## Mongo version: 4.0.4
 
-## To run this project
-# npm install
+# To run this project
+```npm install```
 
-## Frontend
-# npm start
+# Frontend
+```npm start```
 
-## Backend
-# node server/index.js
+# Backend
+```
+node server/index.js
+```
