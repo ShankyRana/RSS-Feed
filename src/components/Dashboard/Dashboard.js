@@ -88,16 +88,16 @@ class Dashboard extends Component {
    ***/
   fetchFeeds = (link) => {
     const data= {
-      link: link?link:this.state.link
+      link: link && typeof link === 'string'?link:this.state.link
     };
-
+    
     axios.post('http://localhost:8000/api/feeds', data)
     .then(response => {
       this.setState({feeds: JSON.parse(response.data.data)});
     })
     .catch(function (error) {
       toast('Payout Successful', toastConfig)
-      console.log(error.response, '========================');
+      console.log(error.response);
     });
   }
 
